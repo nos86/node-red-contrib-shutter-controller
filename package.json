@@ -3,6 +3,11 @@
   "version": "0.0.1",
   "description": "Shutter Controller for NodeRed",
   "main": "index.js",
+  "node-red": {
+    "nodes": {
+      "shutter": "shutter.js"
+    }
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,7 +16,7 @@
     "url": "git+https://github.com/nos86/node-red-contrib-shutter-controller.git"
   },
   "keywords": [
-    "NodeRed",
+    "node-red",
     "Shutter"
   ],
   "author": "Musumeci Salvatore",
