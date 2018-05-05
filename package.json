@@ -1,0 +1,23 @@
+{
+  "name": "red-contrib-shutter-controller",
+  "version": "0.0.1",
+  "description": "Shutter Controller for NodeRed",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nos86/node-red-contrib-shutter-controller.git"
+  },
+  "keywords": [
+    "NodeRed",
+    "Shutter"
+  ],
+  "author": "Musumeci Salvatore",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nos86/node-red-contrib-shutter-controller/issues"
+  },
+  "homepage": "https://github.com/nos86/node-red-contrib-shutter-controller#readme"
+}
