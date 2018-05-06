@@ -1,3 +1,7 @@
+Array.prototype.contains = function(element){
+    return this.indexOf(element) > -1;
+};
+
 module.exports = function(RED) {
     function Shutter(config) {
         RED.nodes.createNode(this,config);
@@ -53,8 +57,12 @@ module.exports = function(RED) {
                     }
                     break;
                 case /status/.test(msg.topic.toLowerCase()):
-                    node.context().set('status', msg.payload);
-                    node.status({fill:(msg.payload == "STOP" ? "grey" : (msg.payload == "UP" ? "green" : "red" )),shape:"dot",text:msg.payload+" ("+position+"%)"});
+                    if(['STOP', 'UP', 'DOWN'].contains(msg.payload.toUpperCase())){
+                        node.context().set('status', msg.payload.toUpperCase());
+                        node.status({fill:(msg.payload == "STOP" ? "grey" : (msg.payload == "UP" ? "green" : "red" )),shape:"dot",text:msg.payload+" ("+position+"%)"});
+                    }else{
+                        node.warn("Value not allowed for STATUS: "+msg.payload);
+                    }
                     break;
                 case /position/.test(msg.topic.toLowerCase()):
                     node.context().set('position', msg.payload);
