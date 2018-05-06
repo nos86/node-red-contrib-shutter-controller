@@ -1,15 +1,16 @@
 <script type="text/javascript">
     RED.nodes.registerType('shutter',{
         category: 'function',
-        color: '#a6bbcf',
+        color: '#87A980',
         defaults: {
             name: {value:""}
         },
         inputs:1,
         outputs:2,
-        icon: "file.png",
+        outputLabels:["Action", "Target"],
+        icon: "hash.png",
         label: function() {
-            return this.name||"shutter";
+            return this.name||"Shutter Controller";
         }
     });
 </script>
@@ -22,5 +23,5 @@
 </script>
 
 <script type="text/x-red" data-help-name="shutter">
-    <p>A simple node that converts the message payloads into all lower-case characters</p>
+    <p>This node implements logic to control an electric shutter</p>
 </script>
