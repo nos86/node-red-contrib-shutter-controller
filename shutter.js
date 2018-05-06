@@ -9,8 +9,8 @@ module.exports = function(RED) {
             var closeMsg = {'topic':'position', 'payload':100};
             var openMsg = {'topic':'position', 'payload':0};
 
-            switch(msg.topic){
-                case "UP":
+            switch(true){
+                case /up/.test(msg.topic.toLowerCase()):
                     switch(msg.payload){
                         case "SHORT":
                             if (status == "STOP"){
@@ -21,27 +21,6 @@ module.exports = function(RED) {
                             break;
                         case "LONG":
                             if (status != "UP"){
-                                node.send([null, (status == "STOP" ? closeMsg : openMsg)]);
-                            }
-                            break;
-                        case "RELEASED":
-                            node.send([stopMsg, null]);
-                            break;
-                        default:
-                            node.warn("Unable to process payload in this message", msg);
-                    }
-                    break;
-                case "DOWN":
-                    switch(msg.payload){
-                        case "SHORT":
-                            if (status == "STOP"){
-                                node.send([null, closeMsg]);
-                            }else{
-                                node.send([stopMsg, null]);
-                            }
-                            break;
-                        case "LONG":
-                            if (status != "DOWN"){
                                 node.send([null, (status == "STOP" ? openMsg : closeMsg)]);
                             }
                             break;
@@ -52,11 +31,32 @@ module.exports = function(RED) {
                             node.warn("Unable to process payload in this message", msg);
                     }
                     break;
-                case "STATUS":
+                case /down/.test(msg.topic.toLowerCase()):
+                    switch(msg.payload){
+                        case "SHORT":
+                            if (status == "STOP"){
+                                node.send([null, closeMsg]);
+                            }else{
+                                node.send([stopMsg, null]);
+                            }
+                            break;
+                        case "LONG":
+                            if (status != "DOWN"){
+                                node.send([null, (status == "STOP" ? closeMsg : openMsg)]);
+                            }
+                            break;
+                        case "RELEASED":
+                            node.send([stopMsg, null]);
+                            break;
+                        default:
+                            node.warn("Unable to process payload in this message", msg);
+                    }
+                    break;
+                case /status/.test(msg.topic.toLowerCase()):
                     node.context().set('status', msg.payload);
                     node.status({fill:(msg.payload == "STOP" ? "grey" : (msg.payload == "UP" ? "green" : "red" )),shape:"dot",text:msg.payload+" ("+position+"%)"});
                     break;
-                case "POSITION":
+                case /position/.test(msg.topic.toLowerCase()):
                     node.context().set('position', msg.payload);
                     node.status({fill:(status == "STOP" ? "grey" : (status == "UP" ? "green" : "red" )),shape:"dot",text:status+" ("+msg.payload+"%)"});
                     break;
