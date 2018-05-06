@@ -23,5 +23,43 @@
 </script>
 
 <script type="text/x-red" data-help-name="shutter">
-    <p>This node implements logic to control an electric shutter</p>
+    <p>This node implements the logic to control an electric shutter.<br/><br/>
+    It can manage four different messages:
+    <ul>
+        <li>UP: command for opening (premitted values are SHORT, LONG, RELEASED)</li>
+        <li>DOWN: command for closing (premitted values are SHORT, LONG, RELEASED)</li>
+        <li>STATUS: message to update module status coming from motor (permitted values are STOP, UP, DOWN)</li>
+        <li>POSITION: message to update shutter position</li>
+    </ul><br/><br/>
+    The outputs are:
+    <ol>
+        <li>STOP message used to stop the shutter at the current position</li>
+        <li>POSITION message used to set the position target. this is a number between 0 and 100 where 0 is totally open and 100 is totally closed</li>
+    </ol><br/><br/>
+    Here the actuation logic:
+    <table border=1 style="text-align:center">
+        <tr>
+            <th></th>
+            <th style="padding-left: 3px; padding-right: 3px;">Same direction</th>
+            <th style="padding-left: 3px; padding-right: 3px;">STOP</th>
+            <th style="padding-left: 3px; padding-right: 3px;">Opposit direction</th>
+        </tr>
+        <tr>
+            <th style="padding-left: 3px; padding-right: 3px;">SHORT</th>
+            <td>STOP</td>
+            <td>MOVE</td>
+            <td>STOP</td>
+        </tr>
+        <tr>
+            <th style="padding-left: 3px; padding-right: 3px;">LONG</th>
+            <td/>
+            <td>MOVE</td>
+            <td>INVERT</td>
+        </tr>
+        <tr>
+            <th style="padding-left: 3px; padding-right: 3px;">RELEASED</th>
+            <td colspan=3>STOP</td>
+        </tr>
+    </table>
+    </p>
 </script>

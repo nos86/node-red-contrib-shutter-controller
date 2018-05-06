@@ -1,6 +1,6 @@
 {
   "name": "red-contrib-shutter-controller",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Shutter Controller for NodeRed",
   "main": "index.js",
   "node-red": {
